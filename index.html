@@ -5,14 +5,15 @@
 		<title>Vue.js • TodoMVC</title>
 		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<link rel="stylesheet" href="styles.css">
 		<style> [v-cloak] { display: none; } </style>
 	</head>
 	<body>
 		<section class="todoapp" v-cloak>
 			<header class="header">
 				<h1>todos</h1>
-				<input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
-				<input class="new-todo" autocomplete="off" placeholder="What is the due date-time?" v-model="newTodoDue" @keyup.enter="addTodo">
+				<input class="new-todo new-todo-title" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo"><!-- removing whitespace in between 2 inputs
+				--><input class="new-todo new-todo-due" autocomplete="off" placeholder="Due: YYYY-MM-DD HH:mm" v-model="newTodoDue" @keyup.enter="addTodo">
 			</header>
 
 			<section class="main" v-show="todos.length">
@@ -21,13 +22,13 @@
 					<li class="todo" v-for="todo in filteredTodos" :class="{completed: todo.completed, editing: todo == editedTodo}">
 						<div class="view">
 							<input class="toggle" type="checkbox" v-model="todo.completed">
-							<label @dblclick="editTodo(todo, 'title')">{{todo.title}}</label>
-							<label @dblclick="editTodo(todo, 'due')">{{todo.due}}</label>
+							<label class="title-label" @dblclick="editTodo(todo, 'title')">{{todo.title}}</label><!-- removing whitespace between these two labels
+							--><label class="due-label" @dblclick="editTodo(todo, 'due')">{{todo.due}}</label>
 							<button class="destroy" @click="removeTodo(todo)"></button>
 						</div>
 
-						<input class="edit" type="text" v-model="todo.title" v-todo-focus="todo == editedTodo && editProp == 'title'" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
-						<input class="edit" type="text" v-model="todo.due" v-todo-focus="todo == editedTodo && editProp == 'due'" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
+						<input class="edit edit-title" :class="{'edit-active': todo == editedTodo && editProp == 'title'}" type="text" v-model="todo.title" v-todo-focus="todo == editedTodo && editProp == 'title'" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)"><!-- removing whitespace between two input elements
+						--><input class="edit edit-due" :class="{'edit-active': todo == editedTodo && editProp == 'due'}" type="text" v-model="todo.due" v-todo-focus="todo == editedTodo && editProp == 'due'" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
 					</li>
 				</ul>
 			</section>

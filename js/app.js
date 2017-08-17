@@ -27,7 +27,11 @@
 	};
 
   var isValidDue = function (due) {
-    return /^\s*\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\s*$/.test(due);
+    return moment(due).isValid();
+  }
+
+  var timeNow = function () {
+    return moment().format('YYYY-MM-DD HH:mm');
   }
 
 	exports.app = new Vue({
@@ -39,7 +43,7 @@
 		data: {
 			todos: todoStorage.fetch(),
 			newTodo: '',
-      newTodoDue: moment().format('YYYY-MM-DD HH:mm'),
+      newTodoDue: timeNow(),
 			editedTodo: null,
       editProp: '',
 			visibility: 'all'
@@ -87,13 +91,15 @@
 				if (!value) {
 					return;
 				}
+        var due = isValidDue(this.newTodoDue) ? this.newTodoDue : timeNow();
+
 				this.todos.push({
           title: value,
           completed: false,
-          due: this.newTodoDue,
+          due: due,
         });
 				this.newTodo = '';
-        this.newTodoDue = moment().format('YYYY-MM-DD HH:mm');
+        this.newTodoDue = timeNow();
 			},
 
 			removeTodo: function (todo) {

@@ -1,0 +1,98 @@
+/**
+ * override placeholder color in todomvc-app-css/index.css
+ * since it is totally invisible right now
+ */
+.todoapp input::-webkit-input-placeholder {
+	color: rgba(0, 0, 0, .38);
+}
+
+.todoapp input::-moz-placeholder {
+	color: rgba(0, 0, 0, .38);
+}
+
+.todoapp input::input-placeholder {
+	color: rgba(0, 0, 0, .38);
+}
+
+.edit-title,
+.new-todo-title {
+  width: 70%;
+  padding-right: 8px;
+}
+
+.edit-due,
+.new-todo-due {
+  width: 30%;
+  padding-left: 8px;
+}
+
+.edit-due,
+.new-todo-due,
+.todo-list .due-label {
+  text-align: right;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, .54);
+  border-left: 1px solid rgba(0, 0, 0, .12);
+}
+
+.todo-list .title-label,
+.todo-list .due-label {
+  display: inline-block;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+.todo-list .title-label {
+  padding-right: 8px;
+  width: 340px;
+}
+
+.todo-list .due-label {
+  padding-left: 8px;
+  margin-left: 0;
+  width: 30%;
+}
+
+.todo-list li.editing .edit {
+  display: inline-block;
+}
+
+.todo-list li.editing .edit-title {
+  margin: 0;
+  padding: 16px 8px 16px 60px;
+  width: 70%;
+  border: none;
+}
+
+.todo-list li.editing .edit-due {
+  margin: 0;
+  padding: 16px 16px 16px 8px;
+  width: 30%;
+  border: none;
+}
+
+.todo-list li.editing .edit-active {
+  border: 1px solid blue;
+}
+
+@media (max-width: 570px) {
+  .todo-list .title-label,
+  .todo-list .due-label {
+    display: block;
+    width: initial;
+  }
+
+  .todo-list .due-label {
+    margin-left: 45px;
+    padding-left: 15px;
+  }
+
+  .todo-list .title-label {
+    padding-right: 60px;
+  }
+
+  .todo-list .due-label {
+    border-left: 0;
+  }
+}
