@@ -17,8 +17,18 @@
 			return todos.filter(function (todo) {
 				return todo.completed;
 			});
-		}
+		},
+    overdue: function (todos) {
+      return todos.filter(function (todo) {
+        return !todo.completed &&
+          moment(todo.due).valueOf() < moment().valueOf();
+      });
+    }
 	};
+
+  var isValidDue = function (due) {
+    return /^\s*\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\s*$/.test(due);
+  }
 
 	exports.app = new Vue({
 
@@ -29,7 +39,9 @@
 		data: {
 			todos: todoStorage.fetch(),
 			newTodo: '',
+      newTodoDue: moment().format('YYYY-MM-DD HH:mm'),
 			editedTodo: null,
+      editProp: '',
 			visibility: 'all'
 		},
 
@@ -75,8 +87,13 @@
 				if (!value) {
 					return;
 				}
-				this.todos.push({ title: value, completed: false });
+				this.todos.push({
+          title: value,
+          completed: false,
+          due: this.newTodoDue,
+        });
 				this.newTodo = '';
+        this.newTodoDue = moment().format('YYYY-MM-DD HH:mm');
 			},
 
 			removeTodo: function (todo) {
@@ -84,9 +101,11 @@
 				this.todos.splice(index, 1);
 			},
 
-			editTodo: function (todo) {
+			editTodo: function (todo, prop) {
 				this.beforeEditCache = todo.title;
+        this.beforeEditDue = todo.due;
 				this.editedTodo = todo;
+        this.editProp = prop;
 			},
 
 			doneEdit: function (todo) {
@@ -95,14 +114,19 @@
 				}
 				this.editedTodo = null;
 				todo.title = todo.title.trim();
+        todo.due = todo.due.trim();
 				if (!todo.title) {
 					this.removeTodo(todo);
 				}
+        if (!isValidDue(todo.due)) {
+          todo.due = this.beforeEditDue;
+        }
 			},
 
 			cancelEdit: function (todo) {
 				this.editedTodo = null;
 				todo.title = this.beforeEditCache;
+        todo.due = this.beforeEditDue;
 			},
 
 			removeCompleted: function () {
