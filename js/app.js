@@ -112,6 +112,9 @@
         this.beforeEditDue = todo.due;
 				this.editedTodo = todo;
         this.editProp = prop;
+        this.visibility = 'all'; // FIXME: editing due date in "overdue" tab
+                                 // can cause weird behavior because of
+                                 // v-model
 			},
 
 			doneEdit: function (todo) {
