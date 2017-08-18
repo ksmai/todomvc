@@ -112,9 +112,10 @@
         this.beforeEditDue = todo.due;
 				this.editedTodo = todo;
         this.editProp = prop;
+        this.lastVisibility = this.visibility;
         this.visibility = 'all'; // FIXME: editing due date in "overdue" tab
                                  // can cause weird behavior because of
-                                 // v-model
+                                 // v-model binding to todo object
 			},
 
 			doneEdit: function (todo) {
@@ -130,12 +131,18 @@
         if (!isValidDue(todo.due)) {
           todo.due = this.beforeEditDue;
         }
+        if (this.lastVisibility) {
+          this.visibility = this.lastVisibility;
+        }
 			},
 
 			cancelEdit: function (todo) {
 				this.editedTodo = null;
 				todo.title = this.beforeEditCache;
         todo.due = this.beforeEditDue;
+        if (this.lastVisibility) {
+          this.visibility = this.lastVisibility;
+        }
 			},
 
 			removeCompleted: function () {
