@@ -40,7 +40,8 @@
 .todo-list .due-label {
   display: inline-block;
   box-sizing: border-box;
-  word-break: break-word;
+  word-break: keep-all; /* firefox */
+  word-break: break-word; /* chrome */
 }
 
 .todo-list .title-label {
